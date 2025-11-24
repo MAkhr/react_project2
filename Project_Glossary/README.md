@@ -82,6 +82,11 @@ Project_Glossary/
 - **Node.js File System**: Markdownファイル操作
 
 ## セットアップ・起動方法
+### gitクローン
+```bash
+git clone https://github.com/MAkhr/react_project2.git
+cd .\react_project2\Project_Glossary\
+```
 
 ### バックエンド起動
 ```bash
