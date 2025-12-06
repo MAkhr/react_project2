@@ -60,6 +60,15 @@ const CloudServices = () => {
           新しいサービスを作成
         </Link>
       </div>
+      <div className="mb-6 p-4 bg-gray-100 rounded">
+        <h3 className="font-bold mb-2">リソースマップ</h3>
+        <a
+          href="/src/components/services/aws_リソースマップ.html"
+          className="text-blue-600 hover:underline"
+        >
+          AWS リソースマップ
+        </a>
+      </div>
 
       {Object.entries(groupedServices).map(([prefix, files]) => (
         <div key={prefix} className="mb-4">

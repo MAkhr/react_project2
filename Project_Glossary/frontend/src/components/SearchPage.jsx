@@ -2,22 +2,26 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { formatServiceName, getGroupTitle } from "../utils/formatServiceName";
 
-const modules = import.meta.glob("./services/*.jsx", { eager: true });
+const modules = import.meta.glob("./services/*.md", { eager: true, as: "raw" });
 
 const SearchPage = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const keyword = queryParams.get("keyword") || "";
 
-  const serviceFiles = Object.keys(modules).map((path) =>
-    path.split("/").pop().replace(".jsx", "")
-  );
-
-  const filteredFiles = serviceFiles.filter((fileName) =>
-    formatServiceName(fileName)
-      .toLowerCase()
-      .includes(keyword.toLowerCase())
-  );
+  // ファイル名と内容の両方で検索
+  const filteredFiles = Object.entries(modules)
+    .filter(([path, content]) => {
+      const fileName = path.split("/").pop().replace(".md", "");
+      const formattedName = formatServiceName(fileName).toLowerCase();
+      const fileContent = content.default || content;
+      
+      return (
+        formattedName.includes(keyword.toLowerCase()) ||
+        fileContent.toLowerCase().includes(keyword.toLowerCase())
+      );
+    })
+    .map(([path]) => path.split("/").pop().replace(".md", ""));
 
   const groupedServices = {};
   filteredFiles.forEach((fileName) => {
